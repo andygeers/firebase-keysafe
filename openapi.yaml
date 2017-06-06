@@ -1,0 +1,98 @@
+swagger: "2.0"
+info:
+  title: Firebase Keysafe
+  version: v1
+  contact:
+    name: PrayerMate Team
+    email: info@prayermate.net
+    url: http://app.prayermate.net
+host: <YOUR_APPENGINE_APP_ID_HERE>.appspot.com
+schemes:
+  - https
+consumes:
+- application/json
+produces:
+- application/json
+x-google-allow: configured
+securityDefinitions:
+  firebase:
+    authorizationUrl: ""
+    flow: "implicit"
+    type: "oauth2"
+    x-google-issuer: "https://securetoken.google.com/<YOUR_FIREBASE_PROJECT_ID>"
+    x-google-jwks_uri: "https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com"
+    x-google-audiences: "<YOUR_FIREBASE_PROJECT_ID>"
+security:
+  - firebase: []
+paths:
+  /key:
+    post:
+      operationId: createKey
+      summary: Creates a new data encryption key
+      responses:
+        "200":
+          description: |-
+            200 response
+          examples:
+            application/json: |-
+              {
+                  "key": "abcdefg",
+                  "encrypted": "bcdefga"
+              }
+        default:
+          description: unexpected error
+          examples:
+            application/json: |-
+              {
+                "success": false,
+                "error": {
+                  "body": "e.body",
+                  "header": "e.header",
+                  "status_code": 403
+                }
+              }
+  /decrypt:
+    get:
+      operationId: decryptKey
+      summary: Decrypts a data encryption key
+      parameters:
+        - name: value
+          in: query
+          description: data encryption key to decrypt
+          required: true
+          type: string
+      responses:
+        "200":
+          description: |-
+            200 response
+          examples:
+            application/json: |-
+              {
+                  "key": "abcdefg"
+              }
+        default:
+          description: unexpected error
+          examples:
+            application/json: |-
+              {
+                "success": false,
+                "input": "abcdefg",
+                "error": {
+                  "body": "e.body",
+                  "header": "e.header",
+                  "status_code": 403
+                }
+              }
+  /_ah/health:
+    get:
+      operationId: healthCheck
+      security: []
+      responses:
+        "200":
+          description: |-
+            200 response
+          examples:
+            application/json: |-
+              {
+                "success": true
+              }
