@@ -7,12 +7,12 @@ by means of Google Cloud KMS.
 
 First you need to initialise your environment:
 
-  # download and install google app engine sdk, (https://cloud.google.com/appengine/docs/standard/python/download)
-  # sort your path, restart your terminal
+    # download and install google app engine sdk, (https://cloud.google.com/appengine/docs/standard/python/download)
+    # sort your path, restart your terminal
 
-  gcloud components install app-engine-python
+    gcloud components install app-engine-python
 
-  virtualenv env
+    virtualenv env
 
 To configure:
 
@@ -21,13 +21,13 @@ To configure:
 
 Then each time you want to test you do this:
 
-  source env/bin/activate
+    source env/bin/activate
 
-  pip install -t lib -r requirements.txt
+    pip install -t lib -r requirements.txt
 
-  dev_appserver.py app.yaml
+    dev_appserver.py app.yaml
 
-  deactivate
+    deactivate
 
 To use:
 
@@ -35,14 +35,15 @@ To use:
   2. POST to '/key' to generate yourself a new encryption key. Returns JSON with "key" (the actual encryption key / DEK) and "encrypted" (that you can store safely in Firebase)
   3. On a new device, make a GET to '/decrypt?value=<encrypted_key>' (where encrypted_key is the value you stored in Firebase in the previous step). This will return JSON with "key" being the decrypted DEK.
 
-It also supports group encryption keys if you use Firebase Custom Claims to add "groups=g1,g2,g3" to your users' JWTs. POST to '/groupkey?group=g1' to generate a group key, and
+It also supports group encryption keys if you use [Firebase Custom Claims](https://firebase.google.com/docs/auth/admin/custom-claims) to add "groups=g1,g2,g3" to your users' JWTs. POST to '/groupkey?group=g1' to generate a group key, and
 any member of that group can then use the same '/decrypt?value=<encrypted_key>' endpoint to decrypt that key.
 
 To deploy:
 
-  gcloud app deploy
+    gcloud app deploy
 
 
+## License
 
     Copyright (c) 2017 Andy Geers.
 
