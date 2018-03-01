@@ -1,6 +1,17 @@
-entrypoint: bundle exec ruby app.rb
-env: flex
-runtime: ruby
-endpoints_api_service:
-  name: <YOUR_APPENGINE_APP_ID_HERE>.appspot.com
-  config_id: 2017-01-01r0
+runtime: python27
+api_version: 1
+threadsafe: true
+
+# [START handlers]
+handlers:
+- url: /.*
+  script: main.app
+# [END handlers]
+
+libraries:
+- name: ssl
+  version: latest
+
+env_variables:
+  # Replace with your Firebase project ID.
+  FIREBASE_PROJECT_ID: '<YOUR_APPENGINE_APP_ID_HERE>'
