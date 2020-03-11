@@ -95,11 +95,7 @@ class AuthService:
     return self.auth_info_from_verified_claims(claims)
 
   def generate_random_key(self):
-    password = b"<USE_A_SECURE_RANDOM_PASSWORD_HERE>"
-    salt = os.urandom(16)
-    iterations = 20000
-    key_len = 16
-    raw_key = hashlib.pbkdf2_hmac('sha1', password, salt, iterations, key_len)
+    raw_key = os.urandom(16)
     ascii_key = self.line_ending_stripper.sub("", base64.b64encode(raw_key).decode('ascii'))
     return ascii_key
 
