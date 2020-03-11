@@ -42,6 +42,9 @@ To deploy:
 
     gcloud app deploy
 
+To run unit tests:
+
+    python runner.py "{google-cloud-sdk-path}"
 
 ## License
 
