@@ -1,6 +1,6 @@
 Flask==1.0
 google-api-python-client
 google-auth==1.4.1
-requests==2.20.0
+requests==2.31.0
 requests-toolbelt==0.8.0
 oauth2client==4.1.3
