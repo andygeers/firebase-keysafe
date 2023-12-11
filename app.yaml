@@ -1,16 +1,10 @@
-runtime: python27
-api_version: 1
-threadsafe: true
+runtime: python310
 
 # [START handlers]
 handlers:
 - url: /.*
-  script: main.app
+  script: auto
 # [END handlers]
-
-libraries:
-- name: ssl
-  version: latest
 
 env_variables:
   # Replace with your Firebase project ID.

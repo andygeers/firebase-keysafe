@@ -24,7 +24,7 @@ app = Flask(__name__)
 # [END create_app]
 
 # Use the App Engine Requests adapter. This makes sure that Requests uses URLFetch.
-requests_toolbelt.adapters.appengine.monkeypatch()
+#requests_toolbelt.adapters.appengine.monkeypatch()
 HTTP_REQUEST = google.auth.transport.requests.Request()
 
 # Require all requests to include this API key - keep it a secret to your application
@@ -102,7 +102,7 @@ class AuthService:
 
   def encrypt_key(self, owner_id, ascii_key):
     kms_request = kms_client.projects().locations().keyRings().cryptoKeys().encrypt(name=KEY_NAME, body={
-      "plaintext": base64.b64encode(owner_id + "|" + ascii_key).decode('ascii')
+      "plaintext": base64.b64encode((owner_id + "|" + ascii_key).encode('ascii')).decode('ascii')
     })
     response = kms_request.execute()
 
@@ -149,7 +149,7 @@ class AuthService:
     })
     response = decrypt_request.execute()
 
-    components = base64.b64decode(response['plaintext']).split("|", 2)
+    components = base64.b64decode(response['plaintext'].encode('ascii')).decode("utf-8").split("|", 2)
 
     if len(components) > 1:
       if not self.authorised_for_key(components[0], auth):
